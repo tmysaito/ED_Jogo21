@@ -4,46 +4,92 @@ import java.util.Scanner;
 
 public class Exercicio_21 {
     public static void main(String[] args) {
-
-        Pontos jogador = new Pontos(5);
-        Pontos computador = new Pontos(5);
+        boolean novoJogo = true;
         Scanner entrada = new Scanner(System.in);
-        
-        // System.out.print("Digite quantos baralhos serão utilizados (1-7): ");
-        // int qtde = entrada.nextInt();
-        // entrada.nextLine();
+        int jogadorVenceu = 0;
+        int computadorVenceu = 0;
 
-        //Baralho baralho = new Baralho(qtde); 
+        while(novoJogo == true){
+           
+            Pontos jogador = new Pontos(5);
+            Pontos computador = new Pontos(5);
+            
+            System.out.print("\n" + "Digite quantos baralhos serão utilizados (1-7): ");
+            int qtde = entrada.nextInt();
+            entrada.nextLine();
 
-        Baralho baralho = new Baralho(1);
-        jogador.push(baralho.pop());
-        jogador.push(baralho.pop());
+            Baralho baralho = new Baralho(qtde);
+            
+            hit(jogador, baralho);
+            hit(jogador, baralho);
+            System.out.println("\n" + "Cartas do jogador: ");
+            jogador.print();
+            System.out.println("\n" + "Total de pontos do jogador: " + jogador.total());
 
-        System.out.println(baralho.size());
-        baralho.print();
+            boolean continuar = true;
+            while(continuar == true && jogador.total() < 21 ){
+                System.out.print("\n" + "Deseja mais uma carta? (s/n): ");
+                char escolha = entrada.next().charAt(0);
+                if(escolha == 's'){
+                    hit(jogador, baralho);
+                    System.out.println("\n" + "Cartas do jogador: ");
+                    jogador.print();
+                    System.out.println("\n" + "Total de pontos: " + jogador.total());
+                } 
+                else continuar = false;  
+            }
 
-       
+            hit(computador, baralho);
+            hit(computador, baralho);
 
-        // jogador.push(baralho.pop());
-        // jogador.push(baralho.pop());
+            if(jogador.total() > 21){
+                System.out.println("\n" + "Cartas do computador: ");
+                computador.print();
+                System.out.println("\n" + "Total de pontos do computador: " + computador.total());
+                System.out.println("Computador venceu" + "\n");
+                computadorVenceu++;
+            }
+            else if(computador.total() > jogador.total()){
+                System.out.println("\n" + "Cartas do computador: ");
+                computador.print();
+                System.out.println("\n" + "Total de pontos do computador: " + computador.total());
+                System.out.println("Computador venceu" + "\n");
+                computadorVenceu++;
+            }
+            else if(computador.total() < 21){
+                while(computador.total() < jogador.total()){
+                    hit(computador, baralho);
+                    System.out.println("\n" + "Cartas do computador: ");
+                    computador.print();
+                    System.out.println("\n" + "Total de pontos do computador: " + computador.total());
+                } 
+                if(computador.total() <= 21 && computador.total() > jogador.total()){
+                    System.out.println("Computador venceu" + "\n");
+                    computadorVenceu++;
+                }
+                else {
+                    System.out.println("Jogador venceu" + "\n");
+                    jogadorVenceu++;
+                }
 
-        // jogador.print();
-        // System.out.print(jogador.total());
+            }
 
-        
+            System.out.println("PLACAR");
+            System.out.println("Jogador " + jogadorVenceu + " x " + computadorVenceu + " Computador");
 
+            System.out.print("\n" + "Jogar novamente? (s/n): ");
+            char escolha = entrada.next().charAt(0);
+            if(escolha == 'n') novoJogo = false; 
 
-        
-        //Collections.shuffle(baralho);
-
-        //baralho.print();
-
-        //baralho.embaralhar();
-        //System.out.println(baralho.size());
-        //baralho.print();
-
+        }
 
         entrada.close();
+
     }
+
+    static void hit(Pontos p, Baralho b){
+        p.push(b.pop());
+    }
+
     
 }

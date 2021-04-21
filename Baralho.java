@@ -19,7 +19,6 @@ public Baralho(int num){
         for(int b=0;b<4;b++){
             for(int c=0;c<13;c++){
                 Carta carta = new Carta(naipe[b],valor[c]);
-                //baralho.push(carta);
                 this.baralho[this.topo] = carta;
                 this.topo++;
             }
