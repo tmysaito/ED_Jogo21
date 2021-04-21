@@ -8,14 +8,23 @@ public class Exercicio_21 {
         Scanner entrada = new Scanner(System.in);
         int jogadorVenceu = 0;
         int computadorVenceu = 0;
+        
 
         while(novoJogo == true){
            
             Pontos jogador = new Pontos(5);
-            Pontos computador = new Pontos(5);
-            
-            System.out.print("\n" + "Digite quantos baralhos serão utilizados (1-7): ");
-            int qtde = entrada.nextInt();
+            Pontos computador = new Pontos(5);            
+            boolean condicao = false;
+            int qtde = 0;
+
+            while(condicao == false){
+                System.out.print("\n" + "Digite quantos baralhos serão utilizados (1-7): ");
+                qtde = entrada.nextInt();
+                if(qtde < 1 || qtde > 7){
+                    System.out.print("\n" + "Valor inválido");
+                }else condicao =  true;            
+            }
+
             entrada.nextLine();
 
             Baralho baralho = new Baralho(qtde);
@@ -79,7 +88,10 @@ public class Exercicio_21 {
 
             System.out.print("\n" + "Jogar novamente? (s/n): ");
             char escolha = entrada.next().charAt(0);
-            if(escolha == 'n') novoJogo = false; 
+            if(escolha == 'n'){
+                novoJogo = false;
+                baralho.print();
+            } 
 
         }
 
